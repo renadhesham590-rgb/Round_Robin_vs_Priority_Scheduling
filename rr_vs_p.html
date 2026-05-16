@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Round Robin vs Priority Scheduling Comparison</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">Round Robin vs Priority Comparison Project</div>
+      <div class="badge">OS Scheduling Simulator • WT / TAT / RT</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <h1>Round Robin vs Priority Scheduling</h1>
+      <p><b>Project Objective:</b> Implement and compare Round Robin and Priority Scheduling using the same workload, then analyze fairness, urgency handling, response time, waiting time, turnaround time, and starvation risk.</p>
+      <p><b>Priority Rule Used:</b> Lower priority number means higher priority. Priority Scheduling here is <b>preemptive</b>. Tie-breaker: earlier arrival time, then smaller input order.</p>
+    </section>
+
+    <div class="grid">
+      <aside class="left-panel">
+        <section class="card">
+          <h2>Input Panel</h2>
+          <div class="row">
+            <div>
+              <label for="processCount">Number of Processes</label>
+              <input id="processCount" type="number" min="1" value="5" />
+            </div>
+            <div>
+              <label for="quantum">Time Quantum</label>
+              <input id="quantum" type="number" min="1" value="3" />
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button class="btn btn-secondary" id="generateBtn">Generate Table</button>
+            <button class="btn btn-primary" id="runBtn">Run Simulation</button>
+          </div>
+
+          <h3>Required Test Scenarios</h3>
+          <div class="scenario-list">
+            <div class="scenario" data-scenario="basic"><strong>A. Basic mixed workload</strong><br><span class="hint">Normal workload with several processes.</span></div>
+            <div class="scenario" data-scenario="urgency"><strong>B. Urgency case</strong><br><span class="hint">High-priority process changes execution order.</span></div>
+            <div class="scenario" data-scenario="fairness"><strong>C. Fairness case</strong><br><span class="hint">Shows Round Robin balanced sharing.</span></div>
+            <div class="scenario" data-scenario="starvation"><strong>D. Possible starvation case</strong><br><span class="hint">Low-priority process waits much longer.</span></div>
+            <div class="scenario" data-scenario="invalid"><strong>E. Validation case</strong><br><span class="hint">Contains invalid input to test rejection.</span></div>
+          </div>
+
+          <div style="margin-top:12px;">
+            <button class="btn btn-success" id="sampleBtn" style="width:100%;">Load Default Sample</button>
+          </div>
+          <p class="hint">Use the same input table for both algorithms. This keeps the comparison valid.</p>
+        </section>
+      </aside>
+
+      <section>
+        <section class="card">
+          <h2>Process Table</h2>
+          <div class="alert error" id="errorBox"></div>
+          <div class="alert ok" id="okBox"></div>
+          <div class="table-wrap">
+            <table class="process-table">
+              <thead>
+                <tr>
+                  <th>Process ID</th>
+                  <th>Arrival Time</th>
+                  <th>Burst Time</th>
+                  <th>Priority</th>
+                </tr>
+              </thead>
+              <tbody id="processBody"></tbody>
+            </table>
+          </div>
+          <p class="hint">Validation rejects: missing fields, non-numeric values, negative arrival time, zero/negative burst time, invalid quantum, invalid priority, and duplicate process IDs.</p>
+        </section>
+
+        <section class="card" id="resultsCard">
+          <h2>Results</h2>
+          <div class="tabs">
+            <button class="tab active" data-target="rrPanel">Round Robin</button>
+            <button class="tab" data-target="priorityPanel">Priority</button>
+            <button class="tab" data-target="comparisonPanel">Comparison Summary</button>
+          </div>
+
+          <div id="rrPanel" class="panel">
+            <h3>Gantt Chart for Round Robin</h3>
+            <div class="gantt" id="rrGantt"></div>
+            <div class="metric-grid" id="rrMetrics"></div>
+            <h3>Results Table for Round Robin</h3>
+            <div class="table-wrap" id="rrTable"></div>
+          </div>
+
+          <div id="priorityPanel" class="panel" style="display:none">
+            <h3>Gantt Chart for Priority (Preemptive)</h3>
+            <div class="gantt" id="priorityGantt"></div>
+            <div class="metric-grid" id="priorityMetrics"></div>
+            <h3>Results Table for Priority</h3>
+            <div class="table-wrap" id="priorityTable"></div>
+          </div>
+
+          <div id="comparisonPanel" class="panel" style="display:none">
+            <h3>Comparison Focus</h3>
+            <div class="comparison">
+              <div class="card" style="box-shadow:none;margin:0;background:#fbfdff">
+                <h3>Performance Metrics</h3>
+                <div class="table-wrap" id="comparisonTable"></div>
+              </div>
+              <div class="card" style="box-shadow:none;margin:0;background:#fbfdff">
+                <h3>Analysis Questions</h3>
+                <div id="analysisText"></div>
+              </div>
+            </div>
+            <h3>Final Conclusion</h3>
+            <div class="conclusion" id="conclusionBox">Run the simulation to generate the conclusion.</div>
+          </div>
+        </section>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    Operating Systems Course | Scheduling Comparison Project
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
